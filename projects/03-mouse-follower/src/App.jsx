@@ -11,6 +11,7 @@ const FollowMouse = () => {
     setPosition({ x: clientX, y: clientY })
   }
 
+  // pointer move
   useEffect(() => {
     enabled ? window.addEventListener('pointermove', handleMove) : ''
 
@@ -18,20 +19,31 @@ const FollowMouse = () => {
       window.removeEventListener('pointermove', handleMove)
     }
   }, [enabled])
+
+  // change body ckassName
+  useEffect(() => {
+    document.body.classList.toggle('no-cursor', enabled)
+
+    return () => {
+      document.body.classList.remove('no-cursor')
+    }
+  }, [enabled])
   return (
     <>
       <div style={{
         position: 'absolute',
-        backgroundColor: '#09f',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        border: '1px solid #fff',
         borderRadius: '50%',
         opacity: 0.8,
         pointerEvents: 'none',
-        left: -20,
-        top: -20,
-        width: 40,
-        height: 40,
+        left: -25,
+        top: -25,
+        width: 50,
+        height: 50,
         transform: `translate(${position.x}px, ${position.y}px)`
-      }}/>
+      }}
+      />
       <button onClick={() => setEnabled(!enabled)}>{enabled ? 'Desactivar' : 'Activar'} seguir puntero</button>
     </>
   )
